@@ -27,7 +27,6 @@ const renderGallery = (items) => {
 
 renderGallery(galleryItems);
 
-
 gallery.addEventListener('click', (event) => {
   event.preventDefault();
 
@@ -39,5 +38,4 @@ gallery.addEventListener('click', (event) => {
   }
 });
 
-
-console.log(galleryItems);
+console.log(galleryItems)
