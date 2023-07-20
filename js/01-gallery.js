@@ -1,9 +1,9 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-import * as basicLightbox from 'basiclightbox';
-import 'basiclightbox/dist/basicLightbox.min.css';
-
 const gallery = document.querySelector('.gallery');
+const lightboxModal = document.getElementById('lightbox-modal');
+const modalImage = lightboxModal.querySelector('.modal__image');
+const modalCloseBtn = lightboxModal.querySelector('.modal__close');
 
 const createGalleryItem = ({ preview, original, description }) => {
   return `
@@ -32,10 +32,13 @@ gallery.addEventListener('click', (event) => {
 
   if (event.target.classList.contains('gallery__image')) {
     const imageUrl = event.target.dataset.source;
-
-    const instance = basicLightbox.create(`<img src="${imageUrl}" width="800" height="600">`);
-    instance.show();
+    modalImage.src = imageUrl;
+    lightboxModal.classList.add('open');
   }
 });
 
-console.log(galleryItems)
+modalCloseBtn.addEventListener('click', () => {
+  lightboxModal.classList.remove('open');
+});
+
+console.log(galleryItems);
