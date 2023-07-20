@@ -1,9 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 const gallery = document.querySelector('.gallery');
-const lightboxModal = document.getElementById('lightbox-modal');
-const modalImage = lightboxModal.querySelector('.modal__image');
-const modalCloseBtn = lightboxModal.querySelector('.modal__close');
 
 const createGalleryItem = ({ preview, original, description }) => {
   return `
@@ -27,18 +24,28 @@ const renderGallery = (items) => {
 
 renderGallery(galleryItems);
 
+const modal = document.getElementById('lightbox-modal');
+const modalImage = modal.querySelector('.modal__image');
+
 gallery.addEventListener('click', (event) => {
   event.preventDefault();
 
-  if (event.target.classList.contains('gallery__image')) {
-    const imageUrl = event.target.dataset.source;
-    modalImage.src = imageUrl;
-    lightboxModal.classList.add('open');
+  const clickedElement = event.target;
+
+  if (clickedElement.classList.contains('gallery__image')) {
+    const imageUrl = clickedElement.dataset.source;
+
+    // Show modal with the large image using basicLightbox
+    const instance = basicLightbox.create(`<img src="${imageUrl}" alt="" />`);
+    instance.show();
   }
 });
 
-modalCloseBtn.addEventListener('click', () => {
-  lightboxModal.classList.remove('open');
+modal.addEventListener('click', (event) => {
+  if (event.target.classList.contains('modal') || event.target.classList.contains('modal__close')) {
+    // Close the modal if clicked on the overlay or close button
+    modal.classList.remove('open');
+  }
 });
 
 console.log(galleryItems);
