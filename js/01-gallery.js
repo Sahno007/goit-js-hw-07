@@ -35,7 +35,6 @@ gallery.addEventListener('click', (event) => {
   if (clickedElement.classList.contains('gallery__image')) {
     const imageUrl = clickedElement.dataset.source;
 
-    // Show modal with the large image using basicLightbox
     const instance = basicLightbox.create(`<img src="${imageUrl}" alt="" />`);
     instance.show();
   }
@@ -43,7 +42,7 @@ gallery.addEventListener('click', (event) => {
 
 modal.addEventListener('click', (event) => {
   if (event.target.classList.contains('modal') || event.target.classList.contains('modal__close')) {
-    // Close the modal if clicked on the overlay or close button
+    
     modal.classList.remove('open');
   }
 });
