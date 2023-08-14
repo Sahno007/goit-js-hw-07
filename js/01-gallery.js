@@ -26,7 +26,6 @@ renderGallery(galleryItems);
 
 const modal = document.getElementById('lightbox-modal');
 const modalImage = modal.querySelector('.modal__image');
-
 let instance = null;
 
 gallery.addEventListener('click', (event) => {
@@ -34,29 +33,29 @@ gallery.addEventListener('click', (event) => {
 
   const clickedElement = event.target;
 
-  if (clickedElement.classList.contains('gallery__image')) {
+  if (clickedElement.tagName === 'IMG') {
     const imageUrl = clickedElement.dataset.source;
 
-    instance = basicLightbox.create(`<img src="${imageUrl}" alt="" />`);
-    instance.show();
+    instance = basicLightbox.create(`<img src="${imageUrl}" alt="" />`, {
+      onShow: () => {
+        window.addEventListener('keydown', onKeyPress);
+      },
+      onClose: () => {
+        window.removeEventListener('keydown', onKeyPress);
+      }
+    });
 
-    // Enable keyboard event listening
-    window.addEventListener('keydown', onKeyPress);
+    instance.show();
   }
 });
 
 modal.addEventListener('click', (event) => {
-  if (event.target.classList.contains('modal') || event.target.classList.contains('modal__close')) {
-    modal.classList.remove('open');
-
-    // Disable keyboard event listening
-    window.removeEventListener('keydown', onKeyPress);
+  if (event.target.classList.contains('modal__close')) {
+    instance.close();
   }
 });
 
-// Keyboard event handler function
 function onKeyPress(event) {
-  // The keycode for the "Escape" key is 27
   if (event.code === 'Escape') {
     instance.close();
   }
